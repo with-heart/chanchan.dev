@@ -1,0 +1,41 @@
+name: master
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  build:
+    name: "build-and-deploy"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@master"
+      - uses: "actions/setup-node@master"
+        with:
+          node-version: "10.x"
+      - uses: "actions/aws@master"
+      - name: "Build the gatsby project"
+        run: "gatsby build"
+      - name: "Deploy the build to s3"
+        uses: "jakejarvis/s3-sync-action"
+        with:
+          args: "--acl public-read --follow-symlinks --delete"
+        env:
+          SOURCE_DIR: "./build"
+          AWS_REGION: "us-east-1"
+          AWS_S3_BUCKET: "${{ secrets.AWS_S3_BUCKET }}"
+          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      - name: "Send CloudFront invalidations"
+        run: |
+          aws create-invalidation \
+            --distribution-id=${DISTRIBUTION_ID}
+          aws create-invalidation \
+            --distribution-id=${WWW_DISTRIBUTION_ID}
+        env:
+          AWS_REGION: "us-east-1"
+          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          DISTRIBUTION_ID: "${{ secrets.DISTRIBUTION_ID }}"
+          WWW_DISTRIBUTION_ID: "${{ secrets.WWW_DISTRIBUTION_ID }}"
