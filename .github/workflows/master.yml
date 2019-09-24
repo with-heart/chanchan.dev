@@ -14,7 +14,6 @@ jobs:
       - uses: "actions/setup-node@master"
         with:
           node-version: "10.x"
-      - uses: "actions/aws@master"
       - name: "Build the gatsby project"
         run: "gatsby build"
       - name: "Deploy the build to s3"
@@ -27,15 +26,13 @@ jobs:
           AWS_S3_BUCKET: "${{ secrets.AWS_S3_BUCKET }}"
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-      - name: "Send CloudFront invalidations"
-        run: |
-          aws create-invalidation \
-            --distribution-id=${DISTRIBUTION_ID}
-          aws create-invalidation \
-            --distribution-id=${WWW_DISTRIBUTION_ID}
-        env:
-          AWS_REGION: "us-east-1"
-          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-          DISTRIBUTION_ID: "${{ secrets.DISTRIBUTION_ID }}"
-          WWW_DISTRIBUTION_ID: "${{ secrets.WWW_DISTRIBUTION_ID }}"
+      - name: "Send chanchan.dev CloudFront invalidation"
+        uses: "actions/aws/cli@master"
+        with:
+          args: "create-invalidation --distribution-id=${DISTRIBUTION_ID}"
+          secrets: ["DISTRIBUTION_ID"]
+      - name: "Send www.chanchan.dev CloudFront invalidation"
+        uses: "actions/aws/cli@master"
+        with:
+          args: "create-invalidation --distribution-id=${WWW_DISTRIBUTION_ID}"
+          secrets: ["WWW_DISTRIBUTION_ID"]
