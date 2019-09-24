@@ -14,6 +14,8 @@ jobs:
       - uses: "actions/setup-node@master"
         with:
           node-version: "10.x"
+      - name: AWS cli install action
+        uses: chrislennon/action-aws-cli@1.1
       - name: "Build the gatsby project"
         run: "gatsby build"
       - name: "Deploy the build to s3"
@@ -27,10 +29,11 @@ jobs:
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
       - name: "Send chanchan.dev CloudFront invalidations"
-        uses: chrislennon/action-aws-cli@1.1
         run: |
           aws create-invalidation --distribution-id=${DISTRIBUTION_ID}
           aws create-invalidation --distribution-id=${WWW_DISTRIBUTION_ID}
         env:
           DISTRIBUTION_ID: "${{ secrets.DISTRIBUTION_ID }}"
           WWW_DISTRIBUTION_ID: "${{ secrets.WWW_DISTRIBUTION_ID }}"
+          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
