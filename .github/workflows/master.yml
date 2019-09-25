@@ -21,7 +21,7 @@ jobs:
       - name: "Deploy the build to s3"
         uses: "jakejarvis/s3-sync-action@master"
         with:
-          args: "--acl public-read --follow-symlinks --delete"
+          args: "--delete"
         env:
           SOURCE_DIR: "./public"
           AWS_REGION: "us-east-1"
