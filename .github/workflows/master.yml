@@ -14,11 +14,10 @@ jobs:
       - uses: "actions/setup-node@master"
         with:
           node-version: "10.x"
-      - name: AWS cli install action
-        uses: chrislennon/action-aws-cli@1.1
+      - uses: chrislennon/action-aws-cli@1.1
       - run: "npm install"
       - name: "Build the gatsby project"
-        run: "gatsby build"
+        run: "npm run build"
       - name: "Deploy the build to s3"
         uses: "jakejarvis/s3-sync-action@master"
         with:
