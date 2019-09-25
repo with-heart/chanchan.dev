@@ -31,9 +31,11 @@ jobs:
       - name: "Send chanchan.dev CloudFront invalidations"
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id=${DISTRIBUTION_ID}
+            --distribution-id ${DISTRIBUTION_ID} \
+            --paths "/*"
           aws cloudfront create-invalidation \
-            --distribution-id=${WWW_DISTRIBUTION_ID}
+            --distribution-id ${WWW_DISTRIBUTION_ID} \
+            --paths "/*"
         env:
           DISTRIBUTION_ID: "${{ secrets.DISTRIBUTION_ID }}"
           WWW_DISTRIBUTION_ID: "${{ secrets.WWW_DISTRIBUTION_ID }}"
