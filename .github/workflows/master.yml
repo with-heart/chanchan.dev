@@ -19,9 +19,8 @@ jobs:
       - name: "Build the gatsby project"
         run: "npm run build"
       - name: "Deploy the build to s3"
-        uses: "jakejarvis/s3-sync-action@master"
-        with:
-          args: "--delete"
+        run: |
+          aws s3 sync . s3://${AWS_S3_BUCKET} --delete
         env:
           SOURCE_DIR: "./public"
           AWS_REGION: "us-east-1"
