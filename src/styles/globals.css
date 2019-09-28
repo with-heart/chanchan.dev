@@ -7,4 +7,5 @@ pre[class*='language-'] {
 pre[class*='language-'] {
   border: 0 !important;
   background-color: #f6f8fa !important;
+  line-height: 1.45 !important;
 }
