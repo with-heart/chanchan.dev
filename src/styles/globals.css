@@ -9,3 +9,7 @@ pre[class*='language-'] {
   background-color: #f6f8fa !important;
   line-height: 1.45 !important;
 }
+
+pre[class*='language-'] * {
+  font-weight: 400 !important;
+}
