@@ -1,0 +1,5 @@
+code[class*='language-'],
+pre[class*='language-'] {
+  font-family: Source Code Pro, SFMono-Regular, Consolas, Liberation Mono, Menlo,
+    monospace !important;
+}
