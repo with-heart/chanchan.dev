@@ -3,3 +3,8 @@ pre[class*='language-'] {
   font-family: Source Code Pro, SFMono-Regular, Consolas, Liberation Mono, Menlo,
     monospace !important;
 }
+
+pre[class*='language-'] {
+  border: 0 !important;
+  background-color: #f6f8fa !important;
+}
