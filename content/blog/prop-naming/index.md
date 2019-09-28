@@ -1,6 +1,6 @@
 ---
 title: On Prop Naming
-date: '2015-05-01T22:12:03.284Z'
+date: '2019-09-28'
 description: "When passing data between components, it's easy to fall into the habit of using the same name for a piece of data in the parent and the prop passed to the child. But does that always make sense? In this post, we'll take a quick look at prop naming."
 ---
 
