@@ -40,7 +40,7 @@ Now let's say we also want to list out the items in our `MusicCollection`. We ha
 
 What happens if we want to reuse the `ListItem` component for this new purpose?
 
-```js
+```jsx
 const MusicCollection = ({cds, records}) => (
   <div>
     <h1>Your music collection</h1>
