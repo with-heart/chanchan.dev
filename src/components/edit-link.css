@@ -1,0 +1,12 @@
+.edit-link {
+	display: flex;
+}
+
+.edit-link:before {
+	background-image: url(../../content/assets/github.png);
+	background-size: 24px 24px;
+	margin-right: 0.25rem;
+	width: 24px;
+	height: 24px;
+	content: "";
+}

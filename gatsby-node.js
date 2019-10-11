@@ -1,19 +1,20 @@
 const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const {createFilePath} = require(`gatsby-source-filesystem`)
 
-exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+exports.createPages = async ({graphql, actions}) => {
+  const {createPage} = actions
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
     `
       {
         allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
+          sort: {fields: [frontmatter___date], order: DESC}
           limit: 1000
         ) {
           edges {
             node {
+              fileAbsolutePath
               fields {
                 slug
               }
@@ -24,7 +25,7 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
-    `
+    `,
   )
 
   if (result.errors) {
@@ -37,6 +38,7 @@ exports.createPages = async ({ graphql, actions }) => {
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
     const next = index === 0 ? null : posts[index - 1].node
+    const relativePath = getContentFilename(post.node.fileAbsolutePath)
 
     createPage({
       path: post.node.fields.slug,
@@ -45,16 +47,24 @@ exports.createPages = async ({ graphql, actions }) => {
         slug: post.node.fields.slug,
         previous,
         next,
+        relativePath,
       },
     })
   })
 }
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+const CONTENT_REGEX = /\/content\/.*/
+const getContentFilename = filename => {
+  if (!filename) return
+  const match = filename.match(CONTENT_REGEX)
+  return match ? match[0] : null
+}
+
+exports.onCreateNode = ({node, actions, getNode}) => {
+  const {createNodeField} = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+    const value = createFilePath({node, getNode})
     createNodeField({
       name: `slug`,
       node,

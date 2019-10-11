@@ -7,6 +7,7 @@ module.exports = {
     social: {
       twitter: `grow_love`,
     },
+    repository: 'https://github.com/with-heart/chanchan.dev',
   },
   plugins: [
     {
