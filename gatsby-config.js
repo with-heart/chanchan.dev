@@ -1,6 +1,8 @@
+const title = 'chanchan dev blog'
+
 module.exports = {
   siteMetadata: {
-    title: `chanchan dev blog`,
+    title: title,
     author: `Mark A. Chandler, II`,
     description: `A blog about frontend and user experience development.`,
     siteUrl: `https://chanchan.dev/`,
@@ -58,8 +60,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
-        short_name: `GatsbyJS`,
+        name: title,
+        short_name: `chanchan.dev`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
