@@ -77,5 +77,13 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
+    {
+      resolve: `gatsby-plugin-draft`,
+      options: {
+        fieldName: `draft`,
+        timezone: `America/New_York`,
+        publishDraft: process.env.NODE_ENV !== 'production',
+      },
+    },
   ],
 }
