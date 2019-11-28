@@ -6,16 +6,27 @@ import Layout from '../components/layout'
 import SEO from '../components/seo'
 import {rhythm} from '../utils/typography'
 
-class BlogIndex extends React.Component {
-  render() {
-    const {data} = this.props
-    const siteTitle = data.site.siteMetadata.title
-    const posts = data.allMarkdownRemark.edges
+export default ({data, location}) => {
+  const siteTitle = data.site.siteMetadata.title
+  const posts = data.allMarkdownRemark.edges
 
-    return (
-      <Layout location={this.props.location} title={siteTitle}>
-        <SEO title="All posts" />
-        <Bio />
+  return (
+    <Layout location={location} title={siteTitle}>
+      <SEO title="Site index" />
+      <Bio />
+
+      <div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            borderBottom: '1px solid hsla(0,0%,0%,0.07)',
+            paddingBottom: '0.25rem',
+          }}
+        >
+          <h2 style={{margin: 0, padding: 0, border: 0}}>Latest Posts</h2>
+          <Link to={`/posts`}>all posts</Link>
+        </div>
         {posts.map(({node}) => {
           const title = node.frontmatter.title || node.fields.slug
           return (
@@ -42,12 +53,10 @@ class BlogIndex extends React.Component {
             </article>
           )
         })}
-      </Layout>
-    )
-  }
+      </div>
+    </Layout>
+  )
 }
-
-export default BlogIndex
 
 export const pageQuery = graphql`
   query {
@@ -57,6 +66,7 @@ export const pageQuery = graphql`
       }
     }
     allMarkdownRemark(
+      limit: 5
       filter: {fields: {draft: {eq: false}}}
       sort: {fields: [frontmatter___date], order: DESC}
     ) {
