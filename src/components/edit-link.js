@@ -22,7 +22,7 @@ export default ({path}) => {
   const href = `${repository}/blob/master${path}`
 
   return repository && path ? (
-    <a class="edit-link" href={href}>
+    <a className="edit-link" href={href}>
       Edit this page on Github
     </a>
   ) : null
