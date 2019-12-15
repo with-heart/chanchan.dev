@@ -3,35 +3,37 @@ name: master
 on:
   push:
     branches:
-      - "master"
+      - 'master'
 
 jobs:
   build:
-    name: "build-and-deploy"
-    runs-on: "ubuntu-latest"
+    name: 'build-and-deploy'
+    runs-on: 'ubuntu-latest'
     steps:
-      - uses: "actions/checkout@master"
-      - uses: "actions/setup-node@master"
+      - uses: 'actions/checkout@master'
+      - uses: 'actions/setup-node@master'
         with:
-          node-version: "10.x"
+          node-version: '10.x'
       - uses: chrislennon/action-aws-cli@1.1
-      - run: "npm install"
-      - name: "Build the gatsby project"
-        run: "npm run build"
-      - name: "Deploy the build to s3"
+      - run: 'yarn'
+      - name: 'Build the gatsby project'
+        working-directory: './www'
+        run: 'npm run build'
+      - name: 'Deploy the build to s3'
+        working-directory: './www'
         run: |
           aws s3 sync ./public s3://${AWS_S3_BUCKET} --delete
         env:
-          AWS_REGION: "us-east-1"
-          AWS_S3_BUCKET: "${{ secrets.AWS_S3_BUCKET }}"
-          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-      - name: "Send chanchan.dev CloudFront invalidations"
+          AWS_REGION: 'us-east-1'
+          AWS_S3_BUCKET: '${{ secrets.AWS_S3_BUCKET }}'
+          AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+      - name: 'Send chanchan.dev CloudFront invalidations'
         run: |
           aws cloudfront create-invalidation \
             --distribution-id ${DISTRIBUTION_ID} \
             --paths "/*"
         env:
-          DISTRIBUTION_ID: "${{ secrets.DISTRIBUTION_ID }}"
-          AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
-          AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          DISTRIBUTION_ID: '${{ secrets.DISTRIBUTION_ID }}'
+          AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
