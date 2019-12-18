@@ -14,6 +14,12 @@ module.exports = {
   plugins: [
     `gatsby-plugin-inter-font`,
     {
+      resolve: `gatsby-theme-series`,
+      options: {
+        name: `series`,
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/content/blog`,
@@ -25,6 +31,13 @@ module.exports = {
       options: {
         path: `${__dirname}/content/assets`,
         name: `assets`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/series`,
+        name: `series`,
       },
     },
     {
