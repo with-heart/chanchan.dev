@@ -114,17 +114,24 @@ exports.onCreateNode = ({
   node,
   actions,
   getNode,
+  getNodes,
   createNodeId,
   createContentDigest,
 }) => {
   const {createNodeField, createNode} = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({node, getNode})
+    const slug = createFilePath({node, getNode})
+    const collection = getNode(node.parent).sourceInstanceName
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value: slug,
+    })
+    createNodeField({
+      name: `collection`,
+      node,
+      value: collection,
     })
   }
 
