@@ -17,6 +17,7 @@ module.exports = {
       resolve: `gatsby-theme-series`,
       options: {
         name: `series`,
+        path: `series`,
       },
     },
     {

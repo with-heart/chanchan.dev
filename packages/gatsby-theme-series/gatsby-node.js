@@ -2,7 +2,7 @@ const slugify = require('slugify')
 
 exports.onCreateNode = (
   {node, actions, createNodeId, createContentDigest},
-  {name: seriesSourceName},
+  {name: seriesSourceName, path: basePath},
 ) => {
   const {createNode} = actions
 
@@ -12,9 +12,10 @@ exports.onCreateNode = (
     node.base === 'series.json'
   ) {
     const data = require(node.absolutePath)
+    const slug = data.slug || slugify(data.name.toLowerCase())
     const fieldData = {
       ...data,
-      slug: data.slug || slugify(data.name.toLowerCase()),
+      slug: `${basePath ? `${basePath.replace(/\//g, '')}/` : ''}${slug}`,
     }
 
     createNode({
@@ -39,7 +40,6 @@ exports.createResolvers = ({createResolvers}) => {
         type: [`SeriesPost`],
         resolve: async (source, args, context, info) => {
           // find series posts sourced from the same directory as the `Series`
-          const slug = source.slug
           const relativeDirectory = context.nodeModel.getNodeById({
             id: source.parent,
           }).relativeDirectory
@@ -55,10 +55,6 @@ exports.createResolvers = ({createResolvers}) => {
               })
               return file.relativeDirectory === relativeDirectory
             })
-            .map(node => ({
-              ...node,
-              slug: `${slug}/${node.slug}`,
-            }))
           return seriesPosts
         },
       },

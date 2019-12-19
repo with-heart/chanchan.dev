@@ -132,10 +132,22 @@ exports.onCreateNode = ({
     node.internal.type === `MarkdownRemark` &&
     getNode(node.parent).sourceInstanceName === 'series'
   ) {
+    const relativeDirectory = getNode(node.parent).relativeDirectory
+    const seriesNode = getNodes().find(node => {
+      const parent = getNode(node.parent)
+      return (
+        node.internal.type === `Series` &&
+        parent.sourceInstanceName === 'series' &&
+        parent.base === 'series.json' &&
+        parent.relativeDirectory === relativeDirectory
+      )
+    })
     const title = node.frontmatter.title
+    const nodeSlug = slugify(title.toLowerCase())
+    const slug = seriesNode ? `${seriesNode.slug}/${nodeSlug}` : nodeSlug
     const fieldData = {
       title: title,
-      slug: slugify(title.toLowerCase()),
+      slug,
       excerpt: node.excerpt,
     }
 
