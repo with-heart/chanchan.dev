@@ -1,0 +1,7 @@
+{
+  "name": "gatsby-plugin-inter-font",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Mark Chandler",
+  "license": "MIT"
+}

@@ -12,6 +12,7 @@ module.exports = {
     repository: 'https://github.com/with-heart/chanchan.dev',
   },
   plugins: [
+    `gatsby-plugin-inter-font`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
