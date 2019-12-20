@@ -15,6 +15,7 @@ export default ({data}) => {
             <li key={s.id}>
               <Link to={s.slug}>{s.name}</Link> (
               {pluralize('post', s.posts.length, true)})
+              {s.description && <p>{s.description}</p>}
             </li>
           ))}
         </ul>

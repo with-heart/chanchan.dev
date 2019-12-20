@@ -8,6 +8,7 @@ export const query = graphql`
     series(slug: {eq: $slug}) {
       name
       slug
+      description
       posts {
         id
         title

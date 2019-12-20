@@ -10,6 +10,7 @@ export const query = graphql`
         id
         name
         slug
+        description
         posts {
           slug
         }

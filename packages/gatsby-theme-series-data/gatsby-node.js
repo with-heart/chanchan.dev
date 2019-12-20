@@ -16,6 +16,7 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       id: ID!
       name: String!
       slug: String!
+      description: String
       posts: [SeriesPost]!
     }
   `)

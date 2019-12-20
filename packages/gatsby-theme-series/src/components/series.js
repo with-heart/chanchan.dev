@@ -8,6 +8,8 @@ export default ({data}) => {
     <div>
       <h1>{series.name}</h1>
 
+      {series.description && <p>{series.description}</p>}
+
       {!!series.posts.length && (
         <ul>
           {series.posts.map(post => {
