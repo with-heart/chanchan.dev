@@ -45,7 +45,7 @@ exports.onCreateNode = (
       const parent = getNode(node.parent)
       return (
         node.internal.type === `Series` &&
-        parent.sourceInstanceName === 'series' &&
+        parent.sourceInstanceName === contentPath &&
         parent.base === 'series.json' &&
         parent.relativeDirectory === relativeDirectory
       )
@@ -76,6 +76,7 @@ exports.onCreateNode = (
 
 const SeriesIndex = require.resolve('./src/templates/series-index.js')
 const SeriesTemplate = require.resolve('./src/templates/series.js')
+const Post = require.resolve('./src/templates/post.js')
 
 exports.createPages = async ({graphql, actions}, themeOptions) => {
   const {createPage} = actions
@@ -86,7 +87,7 @@ exports.createPages = async ({graphql, actions}, themeOptions) => {
     component: SeriesIndex,
   })
 
-  const result = await graphql(
+  const seriesResult = await graphql(
     `
       {
         allSeries {
@@ -98,17 +99,46 @@ exports.createPages = async ({graphql, actions}, themeOptions) => {
     `,
   )
 
-  if (result.errors) {
-    throw result.errors
+  if (seriesResult.errors) {
+    throw seriesResult.errors
   }
 
-  const series = result.data.allSeries.nodes
+  const series = seriesResult.data.allSeries.nodes
 
   series.forEach(s => {
     const slug = s.slug
     createPage({
       path: slug,
       component: SeriesTemplate,
+      context: {
+        slug,
+      },
+    })
+  })
+
+  const seriesPostResult = await graphql(
+    `
+      {
+        allSeriesPost {
+          nodes {
+            slug
+          }
+        }
+      }
+    `,
+  )
+
+  if (seriesPostResult.errors) {
+    throw seriesPostResult.errors
+  }
+
+  const seriesPosts = seriesPostResult.data.allSeriesPost.nodes
+
+  seriesPosts.forEach(post => {
+    const slug = post.slug
+    createPage({
+      path: slug,
+      component: Post,
       context: {
         slug,
       },
