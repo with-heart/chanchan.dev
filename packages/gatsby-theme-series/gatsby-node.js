@@ -36,7 +36,7 @@ exports.onCreateNode = (
 exports.createResolvers = ({createResolvers}) => {
   const resolvers = {
     Series: {
-      items: {
+      posts: {
         type: [`SeriesPost`],
         resolve: async (source, args, context, info) => {
           // find series posts sourced from the same directory as the `Series`
