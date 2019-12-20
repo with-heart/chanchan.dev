@@ -2,12 +2,13 @@ const slugify = require('slugify')
 const withDefaults = require('./utils/default-options')
 
 exports.onCreateNode = (
-  {node, actions, createNodeId, createContentDigest},
+  {node, actions, createNodeId, createContentDigest, getNode, getNodes},
   themeOptions,
 ) => {
   const {createNode} = actions
   const {contentPath, basePath} = withDefaults(themeOptions)
 
+  // create Series
   if (
     node.internal.type === 'File' &&
     node.sourceInstanceName === contentPath &&
@@ -30,6 +31,44 @@ exports.onCreateNode = (
         contentDigest: createContentDigest(JSON.stringify(fieldData)),
         content: JSON.stringify(fieldData),
         description: `Series: "represents a series of posts"`,
+      },
+    })
+  }
+
+  // create SeriesPostMarkdownRemark
+  if (
+    node.internal.type === `MarkdownRemark` &&
+    getNode(node.parent).sourceInstanceName === contentPath
+  ) {
+    const relativeDirectory = getNode(node.parent).relativeDirectory
+    const seriesNode = getNodes().find(node => {
+      const parent = getNode(node.parent)
+      return (
+        node.internal.type === `Series` &&
+        parent.sourceInstanceName === 'series' &&
+        parent.base === 'series.json' &&
+        parent.relativeDirectory === relativeDirectory
+      )
+    })
+    const title = node.frontmatter.title
+    const nodeSlug = slugify(title.toLowerCase())
+    const slug = seriesNode ? `${seriesNode.slug}/${nodeSlug}` : nodeSlug
+    const fieldData = {
+      title: title,
+      slug,
+      excerpt: node.excerpt,
+    }
+
+    createNode({
+      id: createNodeId(`${node.id} >>> SeriesPostMarkdownRemark`),
+      ...fieldData,
+      parent: node.id,
+      children: [],
+      internal: {
+        type: `SeriesPostMarkdownRemark`,
+        contentDigest: createContentDigest(JSON.stringify(fieldData)),
+        content: JSON.stringify(fieldData),
+        description: `SeriesPostMarkdownRemark: "represents a post in a series"`,
       },
     })
   }

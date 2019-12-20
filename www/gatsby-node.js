@@ -118,7 +118,7 @@ exports.onCreateNode = ({
   createNodeId,
   createContentDigest,
 }) => {
-  const {createNodeField, createNode} = actions
+  const {createNodeField} = actions
 
   if (node.internal.type === `MarkdownRemark`) {
     const slug = createFilePath({node, getNode})
@@ -132,43 +132,6 @@ exports.onCreateNode = ({
       name: `collection`,
       node,
       value: collection,
-    })
-  }
-
-  if (
-    node.internal.type === `MarkdownRemark` &&
-    getNode(node.parent).sourceInstanceName === 'content/series'
-  ) {
-    const relativeDirectory = getNode(node.parent).relativeDirectory
-    const seriesNode = getNodes().find(node => {
-      const parent = getNode(node.parent)
-      return (
-        node.internal.type === `Series` &&
-        parent.sourceInstanceName === 'series' &&
-        parent.base === 'series.json' &&
-        parent.relativeDirectory === relativeDirectory
-      )
-    })
-    const title = node.frontmatter.title
-    const nodeSlug = slugify(title.toLowerCase())
-    const slug = seriesNode ? `${seriesNode.slug}/${nodeSlug}` : nodeSlug
-    const fieldData = {
-      title: title,
-      slug,
-      excerpt: node.excerpt,
-    }
-
-    createNode({
-      id: createNodeId(`${node.id} >>> SeriesPostMarkdownRemark`),
-      ...fieldData,
-      parent: node.id,
-      children: [],
-      internal: {
-        type: `SeriesPostMarkdownRemark`,
-        contentDigest: createContentDigest(JSON.stringify(fieldData)),
-        content: JSON.stringify(fieldData),
-        description: `SeriesPostMarkdownRemark: "represents a post in a series"`,
-      },
     })
   }
 }
