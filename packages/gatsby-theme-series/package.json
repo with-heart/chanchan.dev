@@ -5,6 +5,7 @@
   "author": "Mark Chandler <mark@chanchan.io>",
   "license": "MIT",
   "dependencies": {
+    "gatsby-source-filesystem": "^2.1.42",
     "gatsby-theme-series-data": "*",
     "pluralize": "^8.0.0",
     "slugify": "^1.3.6"

@@ -137,7 +137,7 @@ exports.onCreateNode = ({
 
   if (
     node.internal.type === `MarkdownRemark` &&
-    getNode(node.parent).sourceInstanceName === 'series'
+    getNode(node.parent).sourceInstanceName === 'content/series'
   ) {
     const relativeDirectory = getNode(node.parent).relativeDirectory
     const seriesNode = getNodes().find(node => {

@@ -1,14 +1,16 @@
 const slugify = require('slugify')
+const withDefaults = require('./utils/default-options')
 
 exports.onCreateNode = (
   {node, actions, createNodeId, createContentDigest},
-  {name: seriesSourceName, path: basePath},
+  themeOptions,
 ) => {
   const {createNode} = actions
+  const {contentPath, basePath} = withDefaults(themeOptions)
 
   if (
     node.internal.type === 'File' &&
-    node.sourceInstanceName === seriesSourceName &&
+    node.sourceInstanceName === contentPath &&
     node.base === 'series.json'
   ) {
     const data = require(node.absolutePath)
@@ -36,8 +38,9 @@ exports.onCreateNode = (
 const SeriesIndex = require.resolve('./src/templates/series-index.js')
 const SeriesTemplate = require.resolve('./src/templates/series.js')
 
-exports.createPages = async ({graphql, actions}, {path: basePath}) => {
+exports.createPages = async ({graphql, actions}, themeOptions) => {
   const {createPage} = actions
+  const {basePath} = withDefaults(themeOptions)
 
   createPage({
     path: basePath,

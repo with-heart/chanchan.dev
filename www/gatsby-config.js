@@ -17,7 +17,7 @@ module.exports = {
       resolve: `gatsby-theme-series`,
       options: {
         name: `series`,
-        path: `series`,
+        basePath: `series`,
       },
     },
     {
@@ -32,13 +32,6 @@ module.exports = {
       options: {
         path: `${__dirname}/content/assets`,
         name: `assets`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `${__dirname}/content/series`,
-        name: `series`,
       },
     },
     {
