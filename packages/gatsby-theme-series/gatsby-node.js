@@ -33,6 +33,47 @@ exports.onCreateNode = (
   }
 }
 
+const SeriesIndex = require.resolve('./src/templates/series-index.js')
+const SeriesTemplate = require.resolve('./src/templates/series.js')
+
+exports.createPages = async ({graphql, actions}, {path: basePath}) => {
+  const {createPage} = actions
+
+  createPage({
+    path: basePath,
+    component: SeriesIndex,
+  })
+
+  const result = await graphql(
+    `
+      {
+        allSeries {
+          nodes {
+            slug
+          }
+        }
+      }
+    `,
+  )
+
+  if (result.errors) {
+    throw result.errors
+  }
+
+  const series = result.data.allSeries.nodes
+
+  series.forEach(s => {
+    const slug = s.slug
+    createPage({
+      path: slug,
+      component: SeriesTemplate,
+      context: {
+        slug,
+      },
+    })
+  })
+}
+
 exports.createResolvers = ({createResolvers}) => {
   const resolvers = {
     Series: {
