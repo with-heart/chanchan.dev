@@ -1,14 +1,13 @@
 import React from 'react'
 import {Link} from 'gatsby'
 import pluralize from 'pluralize'
+import Layout from './layout'
 
 export default ({data}) => {
   const series = data.allSeries.nodes
 
   return (
-    <div>
-      <h1>All Post Series</h1>
-
+    <Layout title="All Post Series">
       {!!series.length && (
         <ul>
           {series.map(s => (
@@ -20,6 +19,6 @@ export default ({data}) => {
           ))}
         </ul>
       )}
-    </div>
+    </Layout>
   )
 }

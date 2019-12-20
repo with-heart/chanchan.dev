@@ -1,13 +1,12 @@
 import React from 'react'
 import {Link} from 'gatsby'
+import Layout from './layout'
 
 export default ({data}) => {
   const series = data.series
 
   return (
-    <div>
-      <h1>{series.name}</h1>
-
+    <Layout title={series.name}>
       {series.description && <p>{series.description}</p>}
 
       {!!series.posts.length && (
@@ -21,6 +20,6 @@ export default ({data}) => {
           })}
         </ul>
       )}
-    </div>
+    </Layout>
   )
 }
