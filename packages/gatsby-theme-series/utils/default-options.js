@@ -1,9 +1,8 @@
-module.exports = (themeOptions = {}) => {
-  const basePath = themeOptions.basePath || '/'
-  const contentPath = themeOptions.contentPath || 'content/series'
+const {merge} = require('lodash/fp')
 
-  return {
-    basePath,
-    contentPath,
-  }
+const defaultOptions = {
+  basePath: '/',
+  contentPath: 'content/series',
 }
+
+module.exports = merge(defaultOptions)
