@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link, graphql} from 'gatsby'
+import pluralize from 'pluralize'
 
 import Bio from '../components/bio'
 import Layout from '../components/layout'
@@ -9,13 +10,14 @@ import {rhythm} from '../utils/typography'
 export default ({data, location}) => {
   const siteTitle = data.site.siteMetadata.title
   const posts = data.allMarkdownRemark.edges
+  const series = data.allSeries.nodes
 
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="Site index" />
       <Bio />
 
-      <div>
+      <section>
         <div
           style={{
             display: 'flex',
@@ -53,7 +55,46 @@ export default ({data, location}) => {
             </article>
           )
         })}
-      </div>
+      </section>
+
+      <section>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            borderBottom: '1px solid hsla(0,0%,0%,0.07)',
+            paddingBottom: '0.25rem',
+          }}
+        >
+          <h2 style={{margin: 0, padding: 0, border: 0}}>Latest Series</h2>
+          <Link to={`/series`}>all series</Link>
+        </div>
+
+        {!!series.length &&
+          series.map(node => {
+            return (
+              <article key={node.id}>
+                <header>
+                  <h3
+                    style={{
+                      marginBottom: rhythm(1 / 4),
+                    }}
+                  >
+                    <Link style={{boxShadow: `none`}} to={node.slug}>
+                      {node.name}
+                    </Link>
+                  </h3>
+                </header>
+                <section>
+                  <p>
+                    {node.description} (
+                    {pluralize('post', node.postCount, true)})
+                  </p>
+                </section>
+              </article>
+            )
+          })}
+      </section>
     </Layout>
   )
 }
@@ -82,6 +123,15 @@ export const pageQuery = graphql`
             description
           }
         }
+      }
+    }
+    allSeries(limit: 5) {
+      nodes {
+        id
+        name
+        description
+        slug
+        postCount
       }
     }
   }
