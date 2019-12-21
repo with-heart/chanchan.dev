@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'gatsby'
+import SeriesList from './series-list'
 
 export default ({currentPost, series}) => {
   return (
@@ -9,19 +10,7 @@ export default ({currentPost, series}) => {
         series.
       </p>
 
-      <ol>
-        {series.posts.map(post => {
-          return (
-            <li key={post.id}>
-              {post.id === currentPost.id ? (
-                post.title
-              ) : (
-                <Link to={post.slug}>{post.title}</Link>
-              )}
-            </li>
-          )
-        })}
-      </ol>
+      <SeriesList currentPost={currentPost} series={series} />
     </>
   )
 }
