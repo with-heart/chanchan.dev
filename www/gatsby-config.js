@@ -16,8 +16,9 @@ module.exports = {
     {
       resolve: `gatsby-theme-series`,
       options: {
-        name: `series`,
         basePath: `series`,
+        contentPath: `content/series`,
+        navType: 'toc',
       },
     },
     {

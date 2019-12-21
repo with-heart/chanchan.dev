@@ -56,9 +56,15 @@ module.exports = ({actions}, themeOptions) => {
         series: Series! @series
       }
 
+    enum NavType {
+      nav
+      toc
+    }
+
     type SeriesConfig implements Node {
       basePath: String!
       contentPath: String!
+      navType: NavType
     }
   `
 
