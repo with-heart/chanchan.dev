@@ -59,6 +59,8 @@ exports.onCreateNode = (context, themeOptions) => {
     const fieldData = {
       title: title,
       slug,
+      order: node.frontmatter.order,
+      date: node.frontmatter.date,
       excerpt: node.excerpt,
     }
 

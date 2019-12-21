@@ -8,6 +8,8 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       slug: String!
       excerpt: String
       content: String!
+      order: Int
+      date: Date @dateformat
     }
   `)
 
