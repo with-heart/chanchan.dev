@@ -21,6 +21,7 @@ module.exports = async ({graphql, actions}, themeOptions) => {
           nodes {
             slug
             posts {
+              title
               slug
             }
           }
@@ -37,6 +38,7 @@ module.exports = async ({graphql, actions}, themeOptions) => {
 
   series.forEach(s => {
     const slug = s.slug
+    const posts = s.posts
     createPage({
       path: slug,
       component: SeriesTemplate,
@@ -45,13 +47,16 @@ module.exports = async ({graphql, actions}, themeOptions) => {
       },
     })
 
-    s.posts.forEach(post => {
-      const slug = post.slug
+    posts.forEach((post, index) => {
+      const next = index === posts.length - 1 ? null : posts[index + 1]
+      const previous = index === 0 ? null : posts[index - 1]
       createPage({
-        path: slug,
+        path: post.slug,
         component: Post,
         context: {
-          slug,
+          ...post,
+          previous,
+          next,
         },
       })
     })
