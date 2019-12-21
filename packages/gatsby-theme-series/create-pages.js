@@ -1,3 +1,4 @@
+const _ = require('lodash/fp')
 const withDefaults = require('./utils/default-options')
 
 const SeriesIndex = require.resolve('./src/templates/series-index.js')
@@ -19,6 +20,9 @@ module.exports = async ({graphql, actions}, themeOptions) => {
         allSeries {
           nodes {
             slug
+            posts {
+              slug
+            }
           }
         }
       }
@@ -40,34 +44,16 @@ module.exports = async ({graphql, actions}, themeOptions) => {
         slug,
       },
     })
-  })
 
-  const seriesPostResult = await graphql(
-    `
-      {
-        allSeriesPost {
-          nodes {
-            slug
-          }
-        }
-      }
-    `,
-  )
-
-  if (seriesPostResult.errors) {
-    throw seriesPostResult.errors
-  }
-
-  const seriesPosts = seriesPostResult.data.allSeriesPost.nodes
-
-  seriesPosts.forEach(post => {
-    const slug = post.slug
-    createPage({
-      path: slug,
-      component: Post,
-      context: {
-        slug,
-      },
+    s.posts.forEach(post => {
+      const slug = post.slug
+      createPage({
+        path: slug,
+        component: Post,
+        context: {
+          slug,
+        },
+      })
     })
   })
 }
