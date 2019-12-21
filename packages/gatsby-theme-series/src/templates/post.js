@@ -10,6 +10,10 @@ export const query = graphql`
       title
       slug
       content
+      series {
+        name
+        slug
+      }
     }
   }
 `
