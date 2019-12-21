@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'gatsby'
 import Layout from './layout'
 
-export default ({data: {seriesPost: post}, pageContext: {previous, next}}) => {
+export default ({data: {post}, pageContext: {previous, next}}) => {
   return (
     <Layout title={post.title}>
       <article>
