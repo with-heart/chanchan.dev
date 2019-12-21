@@ -47,7 +47,7 @@ module.exports = ({actions}, themeOptions) => {
     },
   })
 
-  createTypes(`
+  const typeDefs = `
     type SeriesPostMarkdownRemark implements Node & SeriesPost
       @childOf(types: ["MarkdownRemark"]) {
         title: String!
@@ -55,5 +55,12 @@ module.exports = ({actions}, themeOptions) => {
         content: String! @proxyResolve(from: "parent.html")
         series: Series! @series
       }
-  `)
+
+    type SeriesConfig implements Node {
+      basePath: String!
+      contentPath: String!
+    }
+  `
+
+  createTypes(typeDefs)
 }

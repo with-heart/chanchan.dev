@@ -1,4 +1,3 @@
-const _ = require('lodash/fp')
 const withDefaults = require('./utils/default-options')
 
 const SeriesIndex = require.resolve('./src/templates/series-index.js')
