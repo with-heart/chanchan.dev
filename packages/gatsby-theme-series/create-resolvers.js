@@ -9,6 +9,13 @@ module.exports = ({createResolvers}) => {
           return resolveSeriesPosts(source, context)
         },
       },
+      postCount: {
+        type: `Int`,
+        resolve: async (source, args, context, info) => {
+          const posts = resolveSeriesPosts(source, context)
+          return posts.length
+        },
+      },
     },
   }
   createResolvers(resolvers)
