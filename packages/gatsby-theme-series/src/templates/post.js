@@ -5,6 +5,9 @@ export default Post
 
 export const query = graphql`
   query SeriesPostBySlug($slug: String!) {
+    config: seriesConfig {
+      navType
+    }
     post: seriesPost(slug: {eq: $slug}) {
       id
       title
@@ -14,6 +17,7 @@ export const query = graphql`
         name
         slug
         posts {
+          id
           title
           slug
         }
