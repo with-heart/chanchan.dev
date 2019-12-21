@@ -1,4 +1,4 @@
-const {resolveSeriesPosts} = require('./utils')
+const {resolveSeriesPosts} = require('series-utils')
 
 module.exports = ({createResolvers}) => {
   const resolvers = {

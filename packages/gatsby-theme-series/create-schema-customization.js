@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const {resolvePostSeries} = require('./utils')
+const {resolvePostSeries} = require('series-utils')
 
 const splitProxyString = str =>
   str.split('.').reduceRight((acc, chunk) => {

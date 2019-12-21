@@ -1,6 +1,6 @@
 const slugify = require('slugify')
-const withDefaults = require('./utils/default-options')
-const {isSeriesNode, isSeriesMarkdownRemark} = require('./utils')
+const withDefaults = require('series-utils/default-options')
+const {isSeriesNode, isSeriesMarkdownRemark} = require('series-utils')
 
 module.exports = (context, themeOptions) => {
   const {

@@ -9,6 +9,7 @@
     "gatsby-theme-series-data": "*",
     "lodash": "^4.17.15",
     "pluralize": "^8.0.0",
+    "series-utils": "*",
     "slugify": "^1.3.6"
   }
 }

@@ -1,4 +1,4 @@
-const withDefaults = require('./utils/default-options')
+const withDefaults = require('series-utils/default-options')
 
 module.exports = themeOptions => {
   const {contentPath} = withDefaults(themeOptions)
