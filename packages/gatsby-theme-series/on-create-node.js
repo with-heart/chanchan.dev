@@ -20,7 +20,7 @@ module.exports = (context, themeOptions) => {
     const slug = data.slug || slugify(data.name.toLowerCase())
     const fieldData = {
       ...data,
-      slug: `${basePath ? `${basePath.replace(/\//g, '')}/` : ''}${slug}`,
+      slug: `/${basePath ? `${basePath.replace(/\//g, '')}/` : ''}${slug}`,
     }
 
     createNode({
@@ -51,7 +51,7 @@ module.exports = (context, themeOptions) => {
     })
     const title = node.frontmatter.title
     const nodeSlug = slugify(title.toLowerCase())
-    const slug = seriesNode ? `${seriesNode.slug}/${nodeSlug}` : nodeSlug
+    const slug = seriesNode ? `${seriesNode.slug}/${nodeSlug}` : `/${nodeSlug}`
     const fieldData = {
       title: title,
       slug,
