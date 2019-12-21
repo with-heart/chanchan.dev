@@ -1,19 +1,25 @@
 const slugify = require('slugify')
 const withDefaults = require('./utils/default-options')
+const {
+  isSeriesNode,
+  isSeriesMarkdownRemark,
+  resolveSeriesPosts,
+} = require('./utils')
 
-exports.onCreateNode = (
-  {node, actions, createNodeId, createContentDigest, getNode, getNodes},
-  themeOptions,
-) => {
+exports.onCreateNode = (context, themeOptions) => {
+  const {
+    node,
+    actions,
+    createNodeId,
+    createContentDigest,
+    getNode,
+    getNodes,
+  } = context
   const {createNode} = actions
   const {contentPath, basePath} = withDefaults(themeOptions)
 
   // create Series
-  if (
-    node.internal.type === 'File' &&
-    node.sourceInstanceName === contentPath &&
-    node.base === 'series.json'
-  ) {
+  if (isSeriesNode(context, themeOptions)) {
     const data = require(node.absolutePath)
     const slug = data.slug || slugify(data.name.toLowerCase())
     const fieldData = {
@@ -36,10 +42,7 @@ exports.onCreateNode = (
   }
 
   // create SeriesPostMarkdownRemark
-  if (
-    node.internal.type === `MarkdownRemark` &&
-    getNode(node.parent).sourceInstanceName === contentPath
-  ) {
+  if (isSeriesMarkdownRemark(context, themeOptions)) {
     const relativeDirectory = getNode(node.parent).relativeDirectory
     const seriesNode = getNodes().find(node => {
       const parent = getNode(node.parent)
@@ -152,23 +155,7 @@ exports.createResolvers = ({createResolvers}) => {
       posts: {
         type: [`SeriesPost`],
         resolve: async (source, args, context, info) => {
-          // find series posts sourced from the same directory as the `Series`
-          const relativeDirectory = context.nodeModel.getNodeById({
-            id: source.parent,
-          }).relativeDirectory
-          const seriesPosts = context.nodeModel
-            .getAllNodes({
-              type: `SeriesPost`,
-            })
-            .filter(node => {
-              const parent = context.nodeModel.getNodeById({id: node.parent})
-              const file = context.nodeModel.getNodeById({
-                id: parent.parent,
-                type: `File`,
-              })
-              return file.relativeDirectory === relativeDirectory
-            })
-          return seriesPosts
+          return resolveSeriesPosts(source, context)
         },
       },
     },
