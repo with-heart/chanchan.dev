@@ -1,5 +1,5 @@
 ---
-title: 'The Best Post'
+title: 'Best Post'
 date: '2019-10-14'
 ---
 
