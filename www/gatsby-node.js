@@ -54,7 +54,7 @@ exports.createPages = async ({graphql, actions}) => {
   })
 }
 
-const CONTENT_REGEX = /\/content\/.*/
+const CONTENT_REGEX = /\/www\/content\/.*/
 const getContentFilename = filename => {
   if (!filename) return
   const match = filename.match(CONTENT_REGEX)
