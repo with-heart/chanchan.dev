@@ -13,6 +13,10 @@ export const query = graphql`
       series {
         name
         slug
+        posts {
+          title
+          slug
+        }
       }
     }
   }
