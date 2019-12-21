@@ -10,6 +10,7 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       content: String!
       order: Int
       date: Date @dateformat
+      series: Series!
     }
   `)
 

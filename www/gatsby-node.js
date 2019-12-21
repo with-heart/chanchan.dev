@@ -1,54 +1,5 @@
-const _ = require('lodash')
 const path = require('path')
 const {createFilePath} = require(`gatsby-source-filesystem`)
-const slugify = require('slugify')
-
-const splitProxyString = str =>
-  str.split('.').reduceRight((acc, chunk) => {
-    return {[chunk]: acc}
-  }, true)
-
-exports.createSchemaCustomization = ({actions, schema}) => {
-  const {createTypes, createFieldExtension} = actions
-
-  createFieldExtension({
-    name: 'proxyResolve',
-    args: {
-      from: {type: 'String!'},
-    },
-    extend: (options, previousFieldConfig) => {
-      return {
-        resolve: async (source, args, context, info) => {
-          await context.nodeModel.prepareNodes(
-            info.parentType, // BlogPostMdxDev
-            splitProxyString(options.from), // querying for resolvable field
-            splitProxyString(options.from), // resolve this field
-            [info.parentType.name], // The types to use are these
-          )
-
-          const newSource = await context.nodeModel.runQuery({
-            type: info.parentType,
-            query: {filter: {id: {eq: source.id}}},
-            firstOnly: true,
-          })
-
-          return _.get(newSource.__gatsby_resolved, options.from)
-        },
-      }
-    },
-  })
-
-  createTypes(`
-    type SeriesPostMarkdownRemark implements Node & SeriesPost
-      @childOf(types: ["MarkdownRemark"]) {
-        id: ID!
-        title: String!
-        slug: String!
-        excerpt: String
-        content: String! @proxyResolve(from: "parent.html")
-      }
-  `)
-}
 
 exports.createPages = async ({graphql, actions}) => {
   const {createPage} = actions

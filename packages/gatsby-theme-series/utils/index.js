@@ -19,6 +19,23 @@ const isSeriesMarkdownRemark = ({node, getNode}, themeOptions) => {
   )
 }
 
+const resolvePostSeries = (source, context) => {
+  const parent = context.nodeModel.getNodeById({
+    id: source.parent,
+  })
+  const relativeDirectory = context.nodeModel.getNodeById({
+    id: parent.parent,
+  }).relativeDirectory
+  const series = context.nodeModel.getAllNodes({type: `Series`}).find(node => {
+    const file = context.nodeModel.getNodeById({
+      id: node.parent,
+      type: `File`,
+    })
+    return file.relativeDirectory === relativeDirectory
+  })
+  return series
+}
+
 const resolveSeriesPosts = (source, context) => {
   const relativeDirectory = context.nodeModel.getNodeById({
     id: source.parent,
@@ -65,6 +82,7 @@ const sortItems = (a, b) => {
 module.exports = {
   isSeriesNode,
   isSeriesMarkdownRemark,
+  resolvePostSeries,
   resolveSeriesPosts,
   sortItems,
 }
