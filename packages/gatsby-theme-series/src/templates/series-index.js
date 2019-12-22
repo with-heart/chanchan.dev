@@ -1,20 +1,16 @@
-import {graphql} from 'gatsby'
+import React from 'react'
+import Layout from '../components/layout'
 import SeriesIndex from '../components/series-index'
 
-export default SeriesIndex
-
-export const query = graphql`
-  {
-    allSeries {
-      nodes {
-        id
-        name
-        slug
-        description
-        posts {
-          slug
-        }
-      }
-    }
-  }
-`
+export default ({
+  data: {
+    series: {nodes: series},
+  },
+  location,
+}) => {
+  return (
+    <Layout location={location}>
+      <SeriesIndex series={series} />
+    </Layout>
+  )
+}

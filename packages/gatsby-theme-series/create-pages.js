@@ -1,8 +1,8 @@
 const withDefaults = require('series-utils/default-options')
 
-const SeriesIndex = require.resolve('./src/templates/series-index.js')
-const SeriesTemplate = require.resolve('./src/templates/series.js')
-const Post = require.resolve('./src/templates/post.js')
+const SeriesIndexQuery = require.resolve('./src/queries/series-index-query.js')
+const SeriesQuery = require.resolve('./src/queries/series-query.js')
+const PostQuery = require.resolve('./src/queries/post-query.js')
 
 module.exports = async ({graphql, actions}, themeOptions) => {
   const {createPage} = actions
@@ -10,7 +10,7 @@ module.exports = async ({graphql, actions}, themeOptions) => {
 
   createPage({
     path: basePath,
-    component: SeriesIndex,
+    component: SeriesIndexQuery,
   })
 
   const seriesResult = await graphql(
@@ -40,7 +40,7 @@ module.exports = async ({graphql, actions}, themeOptions) => {
     const posts = s.posts
     createPage({
       path: slug,
-      component: SeriesTemplate,
+      component: SeriesQuery,
       context: {
         slug,
       },
@@ -51,7 +51,7 @@ module.exports = async ({graphql, actions}, themeOptions) => {
       const previous = index === 0 ? null : posts[index - 1]
       createPage({
         path: post.slug,
-        component: Post,
+        component: PostQuery,
         context: {
           ...post,
           previous,

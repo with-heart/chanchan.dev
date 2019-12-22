@@ -1,19 +1,11 @@
-import {graphql} from 'gatsby'
+import React from 'react'
+import Layout from '../components/layout'
 import Series from '../components/series'
 
-export default Series
-
-export const query = graphql`
-  query SeriesBySlug($slug: String!) {
-    series(slug: {eq: $slug}) {
-      name
-      slug
-      description
-      posts {
-        id
-        title
-        slug
-      }
-    }
-  }
-`
+export default ({data: {series}, location}) => {
+  return (
+    <Layout location={location}>
+      <Series {...series} />
+    </Layout>
+  )
+}

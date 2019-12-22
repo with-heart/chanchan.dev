@@ -1,27 +1,35 @@
-import {graphql} from 'gatsby'
+import React from 'react'
+import Layout from '../components/layout'
 import Post from '../components/post'
+import Nav from '../components/nav'
+import TableOfContents from '../components/toc'
 
-export default Post
-
-export const query = graphql`
-  query SeriesPostBySlug($slug: String!) {
-    config: seriesConfig {
-      navType
-    }
-    post: seriesPost(slug: {eq: $slug}) {
-      id
-      title
-      slug
-      content
-      series {
-        name
-        slug
-        posts {
-          id
-          title
-          slug
-        }
-      }
-    }
-  }
-`
+export default ({
+  data: {
+    post,
+    config: {navType},
+  },
+  pageContext: {previous, next},
+  location,
+}) => {
+  return (
+    <Layout location={location}>
+      <Post {...post} />
+      {!!navType && (
+        <footer>
+          {navType === 'nav' && (
+            <Nav
+              post={post}
+              series={post.series}
+              previous={previous}
+              next={next}
+            />
+          )}
+          {navType === 'toc' && (
+            <TableOfContents currentPost={post} series={post.series} />
+          )}
+        </footer>
+      )}
+    </Layout>
+  )
+}

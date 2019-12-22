@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'gatsby'
-import SeriesList from './series-list'
+import PostList from './post-list'
 
 export default ({currentPost, series}) => {
   return (
@@ -10,7 +10,7 @@ export default ({currentPost, series}) => {
         series.
       </p>
 
-      <SeriesList currentPost={currentPost} series={series} />
+      <PostList currentPost={currentPost} posts={series.posts} />
     </>
   )
 }
