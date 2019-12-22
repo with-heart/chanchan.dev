@@ -53,6 +53,7 @@ module.exports = ({actions}, themeOptions) => {
         title: String!
         slug: String!
         content: String! @proxyResolve(from: "parent.html")
+        excerpt: String @proxyResolve(from: "parent.excerpt")
         series: Series! @series
       }
 
