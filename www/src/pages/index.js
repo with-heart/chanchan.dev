@@ -1,6 +1,5 @@
 import React from 'react'
 import {Link, graphql} from 'gatsby'
-import pluralize from 'pluralize'
 
 import Bio from '../components/bio'
 import Layout from '../components/layout'
@@ -86,10 +85,7 @@ export default ({data, location}) => {
                   </h3>
                 </header>
                 <section>
-                  <p>
-                    {node.description} (
-                    {pluralize('post', node.postCount, true)})
-                  </p>
+                  <p dangerouslySetInnerHTML={{__html: node.description}} />
                 </section>
               </article>
             )
