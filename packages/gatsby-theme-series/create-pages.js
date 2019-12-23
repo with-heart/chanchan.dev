@@ -8,11 +8,6 @@ module.exports = async ({graphql, actions}, themeOptions) => {
   const {createPage} = actions
   const {basePath} = withDefaults(themeOptions)
 
-  createPage({
-    path: basePath,
-    component: SeriesIndexQuery,
-  })
-
   const seriesResult = await graphql(
     `
       {
@@ -34,6 +29,13 @@ module.exports = async ({graphql, actions}, themeOptions) => {
   }
 
   const series = seriesResult.data.allSeries.nodes
+
+  if (series.length) {
+    createPage({
+      path: basePath,
+      component: SeriesIndexQuery,
+    })
+  }
 
   series.forEach(s => {
     const slug = s.slug
