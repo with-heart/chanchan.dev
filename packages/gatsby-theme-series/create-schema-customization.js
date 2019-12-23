@@ -40,8 +40,10 @@ module.exports = ({actions}, themeOptions) => {
       @childOf(types: ["MarkdownRemark"]) {
         title: String!
         slug: String!
+        date: Date @dateformat
         content: String! @proxyResolve(from: "parent.html")
         excerpt: String @proxyResolve(from: "parent.excerpt")
+        order: Int
         series: Series! @link
       }
 
