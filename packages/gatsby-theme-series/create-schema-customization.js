@@ -45,6 +45,7 @@ module.exports = ({actions}, themeOptions) => {
         excerpt: String @proxyResolve(from: "parent.excerpt")
         order: Int
         series: Series! @link
+        draft: Boolean @proxyResolve(from: "parent.fields.draft")
       }
 
     type SeriesConfig implements Node {

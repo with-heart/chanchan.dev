@@ -57,7 +57,6 @@ module.exports = async (context, themeOptions) => {
       slug,
       order: node.frontmatter.order,
       date: node.frontmatter.date,
-      draft: node.frontmatter.draft,
       excerpt: node.excerpt,
       series: seriesNode.id,
     }
