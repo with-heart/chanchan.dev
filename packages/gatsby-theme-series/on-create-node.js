@@ -46,7 +46,7 @@ module.exports = async (context, themeOptions) => {
         node.internal.type === `Series` &&
         parent.sourceInstanceName === contentPath &&
         parent.base === 'series.json' &&
-        parent.relativeDirectory === relativeDirectory
+        relativeDirectory.includes(parent.relativeDirectory)
       )
     })
     const title = node.frontmatter.title
