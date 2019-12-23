@@ -13,6 +13,7 @@ export const query = graphql`
         id
         title
         slug
+        draft
       }
     }
   }

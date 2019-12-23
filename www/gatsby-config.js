@@ -96,7 +96,7 @@ module.exports = {
       options: {
         fieldName: `draft`,
         timezone: `America/New_York`,
-        publishDraft: process.env.NODE_ENV !== 'production',
+        publishDraft: process.env.NODE_ENV === 'development',
       },
     },
   ],

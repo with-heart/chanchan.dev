@@ -12,7 +12,7 @@ module.exports = ({currentPost, posts, series}) => {
         ${posts.map(post => {
           return html`
             <li id=${post.id} key=${post.id}>
-              ${post.id === currentPost.id
+              ${post.id === currentPost.id || post.draft
                 ? post.title
                 : html`
                     <a href=${post.slug}>${post.title}</a>

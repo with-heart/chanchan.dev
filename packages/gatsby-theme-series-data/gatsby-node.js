@@ -11,6 +11,7 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       order: Int
       date: Date @dateformat
       series: Series!
+      draft: Boolean
     }
   `)
 
