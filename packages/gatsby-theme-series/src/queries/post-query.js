@@ -5,13 +5,12 @@ export default PostTemplate
 
 export const query = graphql`
   query SeriesPostBySlug($slug: String!) {
-    config: seriesConfig {
-      navType
-    }
     post: seriesPost(slug: {eq: $slug}) {
       id
+      date(formatString: "MMMM DD, YYYY")
       title
       slug
+      excerpt
       content
       series {
         name

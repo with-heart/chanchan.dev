@@ -14,9 +14,9 @@ function createTOC(context) {
 
 module.exports = (context, pluginOptions) => {
   const {markdownAST} = context
-  const {navType} = withDefaults(pluginOptions)
+  const {showTableOfContents} = withDefaults(pluginOptions)
 
-  if (!navType) return markdownAST
+  if (!showTableOfContents) return markdownAST
 
   if (isSeriesMarkdownRemark(context, pluginOptions)) {
     const seriesPostContext = getMarkdownRemarkSeriesContext(

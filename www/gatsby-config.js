@@ -2,7 +2,7 @@ const title = 'chanchan dev blog'
 const seriesOptions = {
   basePath: `series`,
   contentPath: `content/series`,
-  navType: `toc`,
+  showTableOfContents: true,
 }
 
 module.exports = {
