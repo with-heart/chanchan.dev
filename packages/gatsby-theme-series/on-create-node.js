@@ -58,6 +58,7 @@ module.exports = (context, themeOptions) => {
       order: node.frontmatter.order,
       date: node.frontmatter.date,
       excerpt: node.excerpt,
+      series: seriesNode.id,
     }
 
     createNode({

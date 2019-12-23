@@ -1,5 +1,4 @@
 const _ = require('lodash')
-const {resolvePostSeries} = require('series-utils')
 
 const splitProxyString = str =>
   str.split('.').reduceRight((acc, chunk) => {
@@ -8,17 +7,6 @@ const splitProxyString = str =>
 
 module.exports = ({actions}, themeOptions) => {
   const {createFieldExtension, createTypes} = actions
-
-  createFieldExtension({
-    name: 'series',
-    extend(options, prevFieldConfig) {
-      return {
-        resolve(source, args, context, info) {
-          return resolvePostSeries(source, context)
-        },
-      }
-    },
-  })
 
   createFieldExtension({
     name: 'proxyResolve',
@@ -54,7 +42,7 @@ module.exports = ({actions}, themeOptions) => {
         slug: String!
         content: String! @proxyResolve(from: "parent.html")
         excerpt: String @proxyResolve(from: "parent.excerpt")
-        series: Series! @series
+        series: Series! @link
       }
 
     enum NavType {
