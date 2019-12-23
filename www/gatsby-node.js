@@ -1,4 +1,4 @@
-const path = require(`path`)
+const path = require('path')
 const {createFilePath} = require(`gatsby-source-filesystem`)
 
 exports.createPages = async ({graphql, actions}) => {
@@ -9,7 +9,7 @@ exports.createPages = async ({graphql, actions}) => {
     `
       {
         allMarkdownRemark(
-          filter: {fields: {draft: {eq: false}}}
+          filter: {fields: {draft: {eq: false}, collection: {eq: "blog"}}}
           sort: {fields: [frontmatter___date], order: DESC}
           limit: 1000
         ) {
@@ -37,8 +37,8 @@ exports.createPages = async ({graphql, actions}) => {
   const posts = result.data.allMarkdownRemark.edges
 
   posts.forEach((post, index) => {
-    const previous = index === posts.length - 1 ? null : posts[index + 1].node
-    const next = index === 0 ? null : posts[index - 1].node
+    const previous = index === 0 ? null : posts[index - 1].node
+    const next = index === posts.length - 1 ? null : posts[index + 1].node
     const relativePath = getContentFilename(post.node.fileAbsolutePath)
 
     createPage({
@@ -61,15 +61,28 @@ const getContentFilename = filename => {
   return match ? match[0] : null
 }
 
-exports.onCreateNode = ({node, actions, getNode}) => {
+exports.onCreateNode = ({
+  node,
+  actions,
+  getNode,
+  getNodes,
+  createNodeId,
+  createContentDigest,
+}) => {
   const {createNodeField} = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({node, getNode})
+    const slug = createFilePath({node, getNode})
+    const collection = getNode(node.parent).sourceInstanceName
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value: slug,
+    })
+    createNodeField({
+      name: `collection`,
+      node,
+      value: collection,
     })
   }
 }

@@ -1,4 +1,9 @@
 const title = 'chanchan dev blog'
+const seriesOptions = {
+  basePath: `series`,
+  contentPath: `content/series`,
+  showTableOfContents: true,
+}
 
 module.exports = {
   siteMetadata: {
@@ -13,6 +18,10 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-inter-font`,
+    {
+      resolve: `gatsby-theme-series`,
+      options: seriesOptions,
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -42,6 +51,10 @@ module.exports = {
             options: {
               wrapperStyle: `margin-bottom: 1.0725rem`,
             },
+          },
+          {
+            resolve: `gatsby-remark-series`,
+            options: seriesOptions,
           },
           `gatsby-remark-prismjs`,
           `gatsby-remark-copy-linked-files`,
