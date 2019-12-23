@@ -2,7 +2,7 @@ const slugify = require('slugify')
 const withDefaults = require('series-utils/default-options')
 const {isSeriesNode, isSeriesMarkdownRemark} = require('series-utils')
 
-module.exports = (context, themeOptions) => {
+module.exports = async (context, themeOptions) => {
   const {
     node,
     actions,
@@ -11,7 +11,7 @@ module.exports = (context, themeOptions) => {
     getNode,
     getNodes,
   } = context
-  const {createNode} = actions
+  const {createNode, createParentChildLink} = actions
   const {contentPath, basePath} = withDefaults(themeOptions)
 
   // create Series
@@ -61,8 +61,10 @@ module.exports = (context, themeOptions) => {
       series: seriesNode.id,
     }
 
-    createNode({
-      id: createNodeId(`${node.id} >>> SeriesPostMarkdownRemark`),
+    const id = createNodeId(`${node.id} >>> SeriesPostMarkdownRemark`)
+
+    await createNode({
+      id,
       ...fieldData,
       parent: node.id,
       children: [],
@@ -73,5 +75,8 @@ module.exports = (context, themeOptions) => {
         description: `SeriesPostMarkdownRemark: "represents a post in a series"`,
       },
     })
+
+    const newNode = getNode(id)
+    createParentChildLink({parent: node, child: newNode})
   }
 }
