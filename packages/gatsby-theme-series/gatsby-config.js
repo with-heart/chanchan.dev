@@ -5,6 +5,7 @@ module.exports = themeOptions => {
 
   return {
     plugins: [
+      `gatsby-plugin-catch-links`,
       `gatsby-theme-series-data`,
       {
         resolve: `gatsby-source-filesystem`,

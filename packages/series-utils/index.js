@@ -10,13 +10,38 @@ const isSeriesNode = ({node}, themeOptions) => {
   )
 }
 
-const isSeriesMarkdownRemark = ({node, getNode}, themeOptions) => {
+const isSeriesMarkdownRemark = (context, themeOptions) => {
+  const node = context.node || context.markdownNode
+  const {getNode} = context
   const {contentPath} = withDefaults(themeOptions)
+
+  if (!node) return
 
   return (
     node.internal.type === `MarkdownRemark` &&
     getNode(node.parent).sourceInstanceName === contentPath
   )
+}
+
+const getMarkdownRemarkSeriesContext = (context, options) => {
+  const {getNode, getNodes} = context
+  const node = context.node || context.markdownNode
+  const seriesPostId = node.children.find(child => child)
+  const seriesPost = getNode(seriesPostId)
+  const seriesId = seriesPost.series
+  const series = getNode(seriesId)
+  const seriesPosts = getNodes()
+    .filter(node => {
+      if (node.internal.type !== `SeriesPostMarkdownRemark`) return false
+      return node.series === seriesId
+    })
+    .sort(sortItems)
+
+  return {
+    currentPost: seriesPost,
+    posts: seriesPosts,
+    series,
+  }
 }
 
 const resolvePostSeries = (source, context) => {
@@ -82,6 +107,7 @@ const sortItems = (a, b) => {
 module.exports = {
   isSeriesNode,
   isSeriesMarkdownRemark,
+  getMarkdownRemarkSeriesContext,
   resolvePostSeries,
   resolveSeriesPosts,
   sortItems,
