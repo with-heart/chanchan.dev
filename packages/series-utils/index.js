@@ -56,7 +56,7 @@ const resolvePostSeries = (source, context) => {
       id: node.parent,
       type: `File`,
     })
-    return file.relativeDirectory === relativeDirectory
+    return relativeDirectory.includes(file.relativeDirectory)
   })
   return series
 }
@@ -75,7 +75,7 @@ const resolveSeriesPosts = (source, context) => {
         id: parent.parent,
         type: `File`,
       })
-      return file.relativeDirectory === relativeDirectory
+      return file.relativeDirectory.includes(relativeDirectory)
     })
     .sort(sortItems)
   return seriesPosts
