@@ -4,7 +4,7 @@ order: 10
 draft: true
 ---
 
-# Gatsby
+# Create a Gatsby project
 
 - Gatsby is a static site generator, meaning that we can use it to create static html output
 - `npm i -g gatsby-cli`
@@ -26,7 +26,7 @@ export default () => (
 - The bio also shows an avatar. This comes from `content/assets/avatar.png`. Replace that file with your own avatar, making sure it keeps the same `avatar.png` filename
 - Now we'll commit these changes: `git add . && git commit -m "update bio and avatar"`
 
-## Push the changes to GitHub
+# Push the changes to GitHub
 
 - from github.com, click on the + button in the top right and click "New repository"
 

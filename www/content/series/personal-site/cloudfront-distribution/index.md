@@ -42,7 +42,7 @@ draft: true
 
 ![Arrow pointing to the created distribution](./enabled-distribution-listing.png)
 
-### Set up the error page
+# Set up the error page
 
 - Click on the distributon ID link
 

@@ -4,7 +4,7 @@ order: 11
 draft: true
 ---
 
-## Creating Secrets for our repository
+# Creating Secrets for our repository
 
 - GitHub repositories can be configured with `Secrets`, encrypted values referenced in our workflows. This is a secure way to store the aws variables we need in order to use the `aws` cli
 - Go to the "Secrets" settings panel
@@ -29,7 +29,7 @@ draft: true
 
 ![Screenshot of created Secrets](./secrets-completed.png)
 
-## Configuring `master.yml`
+# Configuring our workflow
 
 - Create the `.github` folder and `master.yml` workflow: `mkdir -p .github/workflows && touch .github/workflows/master.yml`
 - Open the file in your editor
@@ -140,6 +140,9 @@ jobs:
 ```
 
 - Now that we've created our workflow, we need to check it in and push it to GitHub: `git add . && git commit -m "add master workflow" && git push -u origin master`
+
+# Viewing our workflow in action
+
 - Now we should be able to see our Action running
 - Go to the Actions tab of your repository
 

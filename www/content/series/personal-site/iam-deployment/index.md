@@ -11,7 +11,7 @@ draft: true
 
 ![Screenshot of completed security status](./security-status.png)
 
-### Create deployment and invalidation policy
+# Create deployment and invalidation policy
 
 - From the sidebar, select the Policies link
 
@@ -60,7 +60,7 @@ draft: true
 
 ![Arrow pointing to the "Create Policy" button](./create-policy.png)
 
-### Create deployment and invalidation group
+# Create deployment and invalidation group
 
 - Now that we have our policy, we need to create a group to attach it to. In the left sidebar, navigate to "Groups"
 
@@ -80,7 +80,7 @@ draft: true
 
 - At the next screen, verify that the information is correct and then click "Create Group"
 
-### Create our deployment/invalidation user
+# Create our deployment/invalidation user
 
 - The final step is to create the user that will actually be used for our deployment and invalidation and add them to our group
 - Click the "Users" link in the left sidebar
