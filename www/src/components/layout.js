@@ -2,8 +2,9 @@ import React from 'react'
 import {Link, useStaticQuery, graphql} from 'gatsby'
 
 import {rhythm, scale} from '../utils/typography'
+import EditLink from './edit-link'
 
-export default ({location, children}) => {
+export default ({location, children, relativePath}) => {
   const {
     site: {
       siteMetadata: {title},
@@ -73,6 +74,17 @@ export default ({location, children}) => {
       <header>{header}</header>
       <main>{children}</main>
       <footer>
+        {relativePath && (
+          <>
+            <div
+              style={{
+                marginBottom: rhythm(3 / 4),
+              }}
+            >
+              <EditLink path={relativePath} />
+            </div>
+          </>
+        )}
         © {new Date().getFullYear()}, Built with
         {` `}
         <a href="https://www.gatsbyjs.org">Gatsby</a>
