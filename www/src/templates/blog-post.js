@@ -3,7 +3,6 @@ import {Link, graphql} from 'gatsby'
 import Bio from '../components/bio'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-import EditLink from '../components/edit-link'
 import {rhythm, scale} from '../utils/typography'
 
 class BlogPostTemplate extends React.Component {
@@ -13,7 +12,11 @@ class BlogPostTemplate extends React.Component {
     const {previous, next, relativePath} = this.props.pageContext
 
     return (
-      <Layout location={this.props.location} title={siteTitle}>
+      <Layout
+        location={this.props.location}
+        title={siteTitle}
+        relativePath={relativePath}
+      >
         <SEO
           title={post.frontmatter.title}
           description={post.frontmatter.description || post.excerpt}
@@ -50,7 +53,6 @@ class BlogPostTemplate extends React.Component {
         </article>
 
         <nav>
-          {relativePath && <EditLink path={relativePath} />}
           <ul
             style={{
               display: `flex`,

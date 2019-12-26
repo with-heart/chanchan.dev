@@ -4,7 +4,7 @@ const SeriesIndexQuery = require.resolve('./src/queries/series-index-query.js')
 const SeriesQuery = require.resolve('./src/queries/series-query.js')
 const PostQuery = require.resolve('./src/queries/post-query.js')
 
-module.exports = async ({graphql, actions}, themeOptions) => {
+module.exports = async ({graphql, actions, getNode}, themeOptions) => {
   const {createPage} = actions
   const {basePath} = withDefaults(themeOptions)
 
@@ -15,6 +15,7 @@ module.exports = async ({graphql, actions}, themeOptions) => {
           nodes {
             slug
             posts {
+              id
               title
               slug
             }
@@ -49,6 +50,9 @@ module.exports = async ({graphql, actions}, themeOptions) => {
     })
 
     posts.forEach((post, index) => {
+      const node = getNode(post.id)
+      const markdownRemark = getNode(node.parent)
+      const relativePath = getContentFilename(markdownRemark.fileAbsolutePath)
       const next = index === posts.length - 1 ? null : posts[index + 1]
       const previous = index === 0 ? null : posts[index - 1]
       createPage({
@@ -58,8 +62,16 @@ module.exports = async ({graphql, actions}, themeOptions) => {
           ...post,
           previous,
           next,
+          relativePath,
         },
       })
     })
   })
+}
+
+const CONTENT_REGEX = /\/www\/content\/.*/
+const getContentFilename = filename => {
+  if (!filename) return
+  const match = filename.match(CONTENT_REGEX)
+  return match ? match[0] : null
 }

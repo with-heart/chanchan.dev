@@ -1,7 +1,6 @@
 import React from 'react'
 import Bio from '../../components/bio'
 import SEO from '../../components/seo'
-import EditLink from '../../components/edit-link'
 import {rhythm, scale} from '../../utils/typography'
 
 export default ({title, description, date, content, excerpt}) => {
