@@ -3,7 +3,7 @@ const {merge} = require('lodash/fp')
 const defaultOptions = {
   basePath: '/',
   contentPath: 'content/series',
-  showTableOfContents: false,
+  tableOfContents: false,
   publishDraft: false,
 }
 

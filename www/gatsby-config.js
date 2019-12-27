@@ -3,7 +3,7 @@ const publishDraft = process.env.NODE_ENV === 'development'
 const seriesOptions = {
   basePath: `series`,
   contentPath: `content/series`,
-  showTableOfContents: true,
+  tableOfContents: 'bottom',
   publishDraft,
 }
 
