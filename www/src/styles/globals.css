@@ -13,3 +13,7 @@ pre[class*='language-'] {
 pre[class*='language-'] * {
   font-weight: 400 !important;
 }
+
+.table-of-contents {
+  margin: 2rem 0;
+}
