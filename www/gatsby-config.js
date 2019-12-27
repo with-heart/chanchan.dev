@@ -1,8 +1,10 @@
 const title = 'chanchan dev blog'
+const publishDraft = process.env.NODE_ENV === 'development'
 const seriesOptions = {
   basePath: `series`,
   contentPath: `content/series`,
   showTableOfContents: true,
+  publishDraft,
 }
 
 module.exports = {
@@ -96,7 +98,7 @@ module.exports = {
       options: {
         fieldName: `draft`,
         timezone: `America/New_York`,
-        publishDraft: process.env.NODE_ENV === 'development',
+        publishDraft,
       },
     },
   ],

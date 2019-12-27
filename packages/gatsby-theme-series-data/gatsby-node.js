@@ -22,6 +22,7 @@ exports.createSchemaCustomization = ({actions, schema}) => {
       slug: String!
       description: String
       posts: [SeriesPost]!
+      draft: Boolean
     }
   `)
 }
