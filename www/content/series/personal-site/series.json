@@ -1,4 +1,5 @@
 {
   "name": "Create a site in the cloud",
-  "slug": "cloud-site"
+  "slug": "cloud-site",
+  "description": "Create and deploy a site from scratch using Namecheap, AWS, Gatsby, and GitHub"
 }
