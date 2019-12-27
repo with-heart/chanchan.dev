@@ -56,21 +56,21 @@ export default ({data, location}) => {
         })}
       </section>
 
-      <section>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid hsla(0,0%,0%,0.07)',
-            paddingBottom: '0.25rem',
-          }}
-        >
-          <h2 style={{margin: 0, padding: 0, border: 0}}>Latest Series</h2>
-          <Link to={`/series`}>all series</Link>
-        </div>
+      {!!series.length && (
+        <section>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              borderBottom: '1px solid hsla(0,0%,0%,0.07)',
+              paddingBottom: '0.25rem',
+            }}
+          >
+            <h2 style={{margin: 0, padding: 0, border: 0}}>Latest Series</h2>
+            <Link to={`/series`}>all series</Link>
+          </div>
 
-        {!!series.length &&
-          series.map(node => {
+          {series.map(node => {
             return (
               <article key={node.id}>
                 <header>
@@ -90,7 +90,8 @@ export default ({data, location}) => {
               </article>
             )
           })}
-      </section>
+        </section>
+      )}
     </Layout>
   )
 }
@@ -121,7 +122,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allSeries(limit: 5) {
+    allSeries(limit: 5, filter: {draft: {eq: false}}) {
       nodes {
         id
         name

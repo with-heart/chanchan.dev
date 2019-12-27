@@ -12,15 +12,17 @@ module.exports = async (context, themeOptions) => {
     getNodes,
   } = context
   const {createNode, createParentChildLink} = actions
-  const {contentPath, basePath} = withDefaults(themeOptions)
+  const {contentPath, basePath, publishDraft} = withDefaults(themeOptions)
 
   // create Series
   if (isSeriesNode(context, themeOptions)) {
     const data = require(node.absolutePath)
     const slug = data.slug || slugify(data.name.toLowerCase())
+    const draft = !!data.draft && !publishDraft
     const fieldData = {
       ...data,
       slug: `/${basePath ? `${basePath.replace(/\//g, '')}/` : ''}${slug}`,
+      draft,
     }
 
     createNode({

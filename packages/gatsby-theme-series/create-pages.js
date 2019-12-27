@@ -11,7 +11,7 @@ module.exports = async ({graphql, actions, getNode}, themeOptions) => {
   const seriesResult = await graphql(
     `
       {
-        allSeries {
+        allSeries(filter: {draft: {eq: false}}) {
           nodes {
             slug
             posts {
