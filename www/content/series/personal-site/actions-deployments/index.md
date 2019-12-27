@@ -51,7 +51,7 @@ jobs:
     runs-on: 'ubuntu-latest'
 ```
 
-- Now we'll configure a few `actions` that our workflow will use. `checkout` retrieves our code, `setup-node` installs `node` and `chrislennon/action-aws-cli` gives us access to the `aws` cli
+- Now we'll configure a few `actions` that our workflow will use. `checkout` retrieves our code, `setup-node` installs `node` and `chrislennon/action-aws-cli` gives us access to the `aws` cli. Note that we use the specific `1347f1d` commit hash for `action-aws-cli` to [protect ourselves from potential mischief](https://julienrenaux.fr/2019/12/20/github-actions-security-risk/).
 
 ```yaml
 jobs:
@@ -62,7 +62,7 @@ jobs:
       - uses: "actions/checkout@master"
       - uses: "actions/setup-node@master"
         with:
-          node-version: "10.x" - uses: "chrislennon/action-aws-cli@1.1"
+          node-version: "10.x" - uses: "chrislennon/action-aws-cli@1347f1d"
 ```
 
 - Now we'll install our `node_modules` and run the `build` script so that `gatsby` builds our output
@@ -117,7 +117,7 @@ jobs:
       - uses: "actions/setup-node@master"
         with:
           node-version: "10.x"
-      - uses: "chrislennon/action-aws-cli@1.1"
+      - uses: "chrislennon/action-aws-cli@1347f1d"
       - run: "npm install"
       - name: "Build the gatsby project"
         run: "npm run build"
