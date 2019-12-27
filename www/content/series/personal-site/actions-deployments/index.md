@@ -73,19 +73,19 @@ jobs:
   run: 'npm run build'
 ```
 
-- Now that we have our build output, we'll deploy it to `s3`
+- Now that we have our build output, we'll deploy it to `s3`. Note that if you want to use a region other than `us-east-1`, you should change `AWS_DEFAULT_REGION`.
 
 ```yaml
 - name: "Deploy the build to s3"
   run: "aws s3 sync ./public s3://${AWS_S3_BUCKET} --delete"
     env:
-      AWS_REGION: "us-east-1"
+      AWS_DEFAULT_REGION: "us-east-1"
       AWS_S3_BUCKET: "${{ secrets.AWS_S3_BUCKET }}"
       AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
       AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 ```
 
-- The last step is to send a Cloudfront invalidation so that it updates the cache
+- The last step is to send a Cloudfront invalidation so that it updates the cache. Note that if you want to use a region other than `us-east-1`, you should change `AWS_DEFAULT_REGION`.
 
 ```yaml
 - name: 'Send CloudFront invalidation'
@@ -94,6 +94,7 @@ jobs:
     --distribution-id ${AWS_CLOUDFRONT_DISTRIBUTION_ID} \
         --paths "/*"
   env:
+    AWS_DEFAULT_REGION: 'us-east-1'
     AWS_CLOUDFRONT_DISTRIBUTION_ID: '${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}'
     AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
     AWS_SECRET_ACCESS_KEY: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
@@ -124,7 +125,7 @@ jobs:
       - name: "Deploy the build to s3"
         run: "aws s3 sync ./public s3://${AWS_S3_BUCKET} --delete"
         env:
-          AWS_REGION: "us-east-1"
+          AWS_DEFAULT_REGION: "us-east-1"
           AWS_S3_BUCKET: "${{ secrets.AWS_S3_BUCKET }}"
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
@@ -134,6 +135,7 @@ jobs:
             --distribution-id ${AWS_CLOUDFRONT_DISTRIBUTION_ID} \
             --paths "/*"
         env:
+          AWS_DEFAULT_REGION: "us-east-1"
           AWS_CLOUDFRONT_DISTRIBUTION_ID: "${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}"
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
