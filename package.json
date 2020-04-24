@@ -6,6 +6,9 @@
   "author": "Mark Chandler <mark@chanchan.io>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "yarn workspace www start"
+  },
   "workspaces": [
     "packages/*",
     "www"
