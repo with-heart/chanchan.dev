@@ -1,4 +1,4 @@
-const title = 'chanchan dev blog'
+const title = "Mark's Digital Garden"
 const publishDraft = process.env.NODE_ENV === 'development'
 const seriesOptions = {
   basePath: `series`,
@@ -10,7 +10,7 @@ const seriesOptions = {
 module.exports = {
   siteMetadata: {
     title: title,
-    author: `Mark A. Chandler, II`,
+    author: `Mark Chandler`,
     description: `A blog about frontend and user experience development.`,
     siteUrl: `https://chanchan.dev/`,
     social: {

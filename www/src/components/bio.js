@@ -6,15 +6,15 @@
  */
 
 import React from 'react'
-import { useStaticQuery, graphql } from 'gatsby'
+import {useStaticQuery, graphql} from 'gatsby'
 import Image from 'gatsby-image'
 
-import { rhythm } from '../utils/typography'
+import {rhythm} from '../utils/typography'
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
     query BioQuery {
-      avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
+      avatar: file(absolutePath: {regex: "/profile-pic.jpg/"}) {
         childImageSharp {
           fixed(width: 50, height: 50) {
             ...GatsbyImageSharpFixed
@@ -32,7 +32,7 @@ const Bio = () => {
     }
   `)
 
-  const { author, social } = data.site.siteMetadata
+  const {author, social} = data.site.siteMetadata
   return (
     <div
       style={{
@@ -54,12 +54,12 @@ const Bio = () => {
         }}
       />
       <p>
-        Written by <strong>{author}</strong> who lives and works in Cincinnati,
-        Ohio and has has an obsession with frontend and user experience
-        development.
+        You're standing in the digital garden of <strong>{author}</strong>, a
+        frontend and user experience developer from Cincinnati, Ohio. This is my
+        place for growing ideas. Everything within is a living work-in-progress.
         {` `}
         <a href={`https://twitter.com/${social.twitter}`}>
-          You should follow him on Twitter
+          You should follow me on Twitter!
         </a>
       </p>
     </div>
