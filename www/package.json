@@ -30,7 +30,7 @@
     "gatsby-theme-series": "*",
     "gatsby-transformer-remark": "^2.6.21",
     "gatsby-transformer-sharp": "^2.2.13",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "pluralize": "^8.0.0",
     "prism-themes": "^1.2.0",
     "prismjs": "^1.17.1",
